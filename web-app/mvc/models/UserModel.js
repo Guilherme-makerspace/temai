@@ -9,7 +9,7 @@ class User
     constructor(email, password, name)
     {   
         this.#validateEmail(email)
-
+        
         this.#email = email
         this.#password = password
         this.#name = name

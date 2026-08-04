@@ -1,11 +1,267 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Editar Usuário | Tem Aí</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial Black', 'Segoe UI', Arial, sans-serif;
+            background-color: #f5efe0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .card {
+            background: #ffffff;
+            border: 4px solid #111111;
+            border-radius: 12px;
+            box-shadow: 8px 8px 0 #111111;
+            width: 100%;
+            max-width: 420px;
+            padding: 36px 32px;
+        }
+
+        .logo {
+            font-size: 26px;
+            color: #111111;
+            text-align: center;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: #e63946;
+        }
+
+        .subtitle {
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 13px;
+            color: #666666;
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #111111;
+            margin-bottom: 6px;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 12px 14px;
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 15px;
+            background: #faf7f0;
+            border: 3px solid #111111;
+            border-radius: 8px;
+            color: #111111;
+            outline: none;
+            transition: box-shadow 0.15s ease;
+        }
+
+        .field input:focus {
+            box-shadow: 4px 4px 0 #111111;
+            background: #ffffff;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            font-family: 'Arial Black', Arial, sans-serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            color: #111111;
+            border: 3px solid #111111;
+            border-radius: 8px;
+            box-shadow: 5px 5px 0 #111111;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .btn:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 3px 3px 0 #111111;
+        }
+
+        .btn:active {
+            transform: translate(5px, 5px);
+            box-shadow: 0 0 0 #111111;
+        }
+
+        .btn-save {
+            background: #ffd166;
+        }
+
+        .btn-delete {
+            background: #e63946;
+            color: #ffffff;
+        }
+
+        .btn-cancel {
+            background: #cccccc;
+            box-shadow: none;
+        }
+
+        .btn-cancel:hover {
+            transform: none;
+            box-shadow: none;
+            background: #bbbbbb;
+        }
+
+        .message {
+            display: none;
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            border: 3px solid #111111;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .message.success {
+            display: block;
+            background: #a8e6a1;
+            color: #111111;
+        }
+
+        .message.error {
+            display: block;
+            background: #ffb3b3;
+            color: #111111;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 13px;
+            color: #555555;
+        }
+
+        .footer a {
+            color: #111111;
+            font-weight: bold;
+            text-decoration: none;
+            border-bottom: 2px solid #e63946;
+        }
+
+        .footer a:hover {
+            color: #e63946;
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="card">
+        <h1 class="logo">TEM <span>AÍ</span></h1>
+        <p class="subtitle">Edite seus dados</p>
+
+        <% if (typeof user !== 'undefined' && user) { %>
+            <div id="message" class="message"></div>
+
+            <form id="editForm">
+                <input type="hidden" id="userId" value="<%= user.id %>">
+
+                <div class="field">
+                    <label for="name">Nome</label>
+                    <input type="text" id="name" name="name" value="<%= user.name %>" required>
+                </div>
+
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="<%= user.email %>" required>
+                </div>
+
+                <div class="field">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" name="password" placeholder="Deixe em branco para manter a atual" />
+                </div>
+
+                <div class="actions">
+                    <button type="submit" class="btn btn-save">Salvar</button>
+                    <button type="button" id="deleteBtn" class="btn btn-delete">Excluir</button>
+                </div>
+            </form>
+
+            <p class="footer">
+                <a href="/">Voltar para a home</a>
+            </p>
+
+            <script>
+                const userId = document.getElementById('userId').value;
+                const messageEl = document.getElementById('message');
+
+                function showMessage(text, type) {
+                    messageEl.textContent = text;
+                    messageEl.className = 'message ' + type;
+                }
+
+                document.getElementById('editForm').addEventListener('submit', async function (event) {
+                    event.preventDefault();
+
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+
+                    const response = await fetch('/user/edit', {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: userId, name, email, password })
+                    });
+
+                    if (response.ok) {
+                        showMessage('Usuário atualizado com sucesso!', 'success');
+                    } else {
+                        showMessage('Erro ao atualizar usuário.', 'error');
+                    }
+                });
+
+                document.getElementById('deleteBtn').addEventListener('click', async function () {
+                    const response = await fetch('/user/delete/' + userId, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        window.location.href = '/';
+                    } else {
+                        showMessage('Erro ao excluir usuário.', 'error');
+                    }
+                });
+            </script>
+        <% } else { %>
+            <p class="subtitle">Usuário não encontrado.</p>
+            <p class="footer">
+                <a href="/">Voltar para a home</a>
+            </p>
+        <% } %>
+    </div>
 </body>
 </html>

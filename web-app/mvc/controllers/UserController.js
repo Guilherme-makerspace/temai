@@ -5,7 +5,7 @@ class UserController
 {
     constructor()
     {
-        this.usuarioService = new UserService()
+        this.userService = new UserService()
     }
 
     async index(req, res)
@@ -21,7 +21,7 @@ class UserController
 //Tela de editar usuário
     async userEditView(req, res)
     {
-        const user = await this.UserService.searchUser(req.params.id)
+        const user = await this.userService.searchUser(req.params.id)
         res.render("UserEdit", { user: user })
     }
 
@@ -41,12 +41,13 @@ class UserController
     async userPutAsync(req, res)
     {
         const affectedRows = await this.userService.updateUser(
-            req,body.id,
-            req,body.name,
-            req,body.email,
-            req,body.password
+            req.body.id,
+            req.body.name,
+            req.body.email,
+            req.body.password
         )
 
+        res.json({ affectedRows: affectedRows })
     }
 
 //Deletar usuário

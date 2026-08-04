@@ -16,7 +16,7 @@ class UserService
 //Cadastrar usuário
     async signUpUser(name, email, password)
     {
-        const user = new User(name, email, password)
+        const user = new User(email, password, name)
         
         const u = await this.#userSchema.create(
             {
@@ -45,7 +45,7 @@ class UserService
        const user = new User(
         data.email,
         data.password,
-        data.name
+        data.username
        )
 
        user.id = data.id
@@ -87,7 +87,7 @@ class UserService
 
              const affectedRows = await this.#userSchema.update(
                 {
-                    name: model.name,
+                    username: model.name,
                     email: model.email,
                     password: model.password
                 },
