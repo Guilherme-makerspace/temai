@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "mysql2": "^3.23.2",
+    "sequelize": "^6.37.8"
+  },
+  "name": "temai",
+  "version": "1.0.0",
+  "description": "Projeto visando desenvolver aplicação de receitas",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Guilherme-makerspace/temai.git"
+  },
+  "author": "Guilherme Oliveira Araújo, Matheus Garcia Oliveira, Alicia Soares Oliveira, Maria Clara Galindo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Guilherme-makerspace/temai/issues"
+  },
+  "homepage": "https://github.com/Guilherme-makerspace/temai#readme"
+}
