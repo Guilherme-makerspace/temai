@@ -10,19 +10,19 @@ class UserController
 
     async index(req, res)
     {
-        res.render("Home")
+        res.render("User/UserHome")
     }
 
     userSignUpView(req, res)
     {
-        res.render("UserSignUp")
+        res.render("User/UserSignUp")
     }
 
 //Tela de editar usuário
     async userEditView(req, res)
     {
         const user = await this.userService.searchUser(req.params.id)
-        res.render("UserEdit", { user: user })
+        res.render("User/UserEdit", { user: user })
     }
 
 //Cadastrar usuário

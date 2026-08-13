@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Recipe</title>
+</head>
+<body>
+    <h1>Search Recipe by Name</h1>
+
+    <!-- Form sending GET request with 'name' query parameter -->
+    <form action="/recipe/search" method="GET">
+        <label for="name">Recipe Name:</label>
+        <input type="text" id="name" name="name" placeholder="e.g. Arrabiata" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <hr>
+
+    <!-- Display Results -->
+    <% if (locals.recipes && recipes.length > 0) { %>
+        <h2>Results:</h2>
+        <ul>
+            <% recipes.forEach(recipe => { %>
+                <li>
+                    <h3><%= recipe.strMeal %></h3>
+                    <img src="<%= recipe.strMealThumb %>" alt="<%= recipe.strMeal %>" width="150">
+                    <p><strong>Category:</strong> <%= recipe.strCategory %></p>
+                    <p><strong>Area:</strong> <%= recipe.strArea %></p>
+                    <p><strong>Instructions:</strong> <%= recipe.strInstructions %></p>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else if (locals.recipes) { %>
+        <p>No recipes found.</p>
+    <% } %>
+</body>
+</html>

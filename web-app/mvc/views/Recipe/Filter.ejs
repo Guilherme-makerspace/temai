@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Filter Recipes</title>
+</head>
+<body>
+    <h1>Filter Recipes by Category</h1>
+
+    <!-- Form sending GET request with 'category' query parameter -->
+    <form action="/recipe/filter" method="GET">
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category" placeholder="e.g. Seafood, Beef, Dessert" required>
+        <button type="submit">Filter</button>
+    </form>
+
+    <hr>
+
+    <!-- Display Results -->
+    <% if (locals.recipes && recipes.length > 0) { %>
+        <h2>Results:</h2>
+        <ul>
+            <% recipes.forEach(recipe => { %>
+                <li>
+                    <h3><%= recipe.strMeal %></h3>
+                    <img src="<%= recipe.strMealThumb %>" alt="<%= recipe.strMeal %>" width="150">
+                </li>
+            <% }) %>
+        </ul>
+    <% } else if (locals.recipes) { %>
+        <p>No recipes found for this category.</p>
+    <% } %>
+</body>
+</html>
