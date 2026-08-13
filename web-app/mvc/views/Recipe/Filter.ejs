@@ -5,19 +5,37 @@
     <title>Filter Recipes</title>
 </head>
 <body>
-    <h1>Filter Recipes by Category</h1>
+    <h1>Filter Recipes</h1>
 
-    <!-- Form sending GET request with 'category' query parameter -->
     <form action="/recipe/filter" method="GET">
-        <label for="category">Category:</label>
-        <input type="text" id="category" name="category" placeholder="e.g. Seafood, Beef, Dessert" required>
+        <div>
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" value="<%= locals.category || '' %>" placeholder="e.g. Seafood, Beef">
+        </div>
+
+        <br>
+
+        <div>
+            <label for="ingredient">Main Ingredient:</label>
+            <input type="text" id="ingredient" name="ingredient" value="<%= locals.ingredient || '' %>" placeholder="e.g. Chicken, Garlic">
+        </div>
+
+        <br>
+
+        <div>
+            <label for="area">Area / Cuisine:</label>
+            <input type="text" id="area" name="area" value="<%= locals.area || '' %>" placeholder="e.g. Italian, Mexican, Canadian">
+        </div>
+
+        <br>
+
         <button type="submit">Filter</button>
     </form>
 
     <hr>
 
-    <!-- Display Results -->
-    <% if (locals.recipes && recipes.length > 0) { %>
+    <!-- Resultados -->
+    <% if (Array.isArray(locals.recipes) && recipes.length > 0) { %>
         <h2>Results:</h2>
         <ul>
             <% recipes.forEach(recipe => { %>
@@ -27,8 +45,8 @@
                 </li>
             <% }) %>
         </ul>
-    <% } else if (locals.recipes) { %>
-        <p>No recipes found for this category.</p>
+    <% } else if (Array.isArray(locals.recipes) && recipes.length === 0) { %>
+        <p>No recipes found matching these criteria.</p>
     <% } %>
 </body>
 </html>
